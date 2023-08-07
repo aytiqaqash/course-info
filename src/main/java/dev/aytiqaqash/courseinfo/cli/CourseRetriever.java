@@ -1,8 +1,11 @@
 package dev.aytiqaqash.courseinfo.cli;
 
 import dev.aytiqaqash.courseinfo.cli.service.CourseRetrieverService;
+import dev.aytiqaqash.courseinfo.cli.service.PluralsightCourse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 public class CourseRetriever {
 
@@ -26,7 +29,7 @@ public class CourseRetriever {
         LOG.info("Retrieving courses for author '{}'", authorId);
         CourseRetrieverService courseRetrieverService = new CourseRetrieverService();
 
-        String coursesToStore = courseRetrieverService.getCoursesFor(authorId);
+        List<PluralsightCourse> coursesToStore = courseRetrieverService.getCoursesFor(authorId);
         LOG.info("Retrieved the following courses {}", coursesToStore);
     }
 
