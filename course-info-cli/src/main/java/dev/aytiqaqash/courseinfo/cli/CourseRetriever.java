@@ -1,7 +1,9 @@
 package dev.aytiqaqash.courseinfo.cli;
 
 import dev.aytiqaqash.courseinfo.cli.service.CourseRetrieverService;
+import dev.aytiqaqash.courseinfo.cli.service.CourseStorageService;
 import dev.aytiqaqash.courseinfo.cli.service.PluralsightCourse;
+import dev.aytiqaqash.courseinfo.repository.CourseRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,12 +32,17 @@ public class CourseRetriever {
     private static void retrieveCourses(String authorId) {
         LOG.info("Retrieving courses for author '{}'", authorId);
         CourseRetrieverService courseRetrieverService = new CourseRetrieverService();
+        CourseRepository courseRepository = CourseRepository.openCourseRepository("./courses.db");
+        CourseStorageService courseStorageService = new CourseStorageService(courseRepository);
+
 
         List<PluralsightCourse> coursesToStore = courseRetrieverService.getCoursesFor(authorId)
                 .stream()
                 .filter(not(PluralsightCourse::isRetired))
                 .toList();
-        LOG.info("Retrieved the following courses {}", coursesToStore);
+        LOG.info("Retrieved the following {} courses {}", coursesToStore.size(), coursesToStore);
+        courseStorageService.storePluralsightCourses(coursesToStore);
+        LOG.info("Courses are successfully stored!");
     }
 
 
