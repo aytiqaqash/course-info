@@ -35,7 +35,7 @@ class CourseJdbcRepository implements  CourseRepository{
             statement.setString(1, course.id());
             statement.setString(2, course.name());
             statement.setLong(3, course.length());
-            statement.setString(1, course.url());
+            statement.setString(4, course.url());
             statement.execute();
         }catch (SQLException sqlException){
             throw new RepositoryException("Failed to save " + course, sqlException);
