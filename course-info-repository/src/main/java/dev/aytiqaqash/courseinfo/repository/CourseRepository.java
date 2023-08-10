@@ -6,8 +6,9 @@ import java.util.List;
 
 public interface CourseRepository {
     void saveCourse(Course course);
+    void addNotes(String id, String notes);
 
-    List<Course> getALlCourses();
+    List<Course> getAllCourses();
 
     static CourseRepository openCourseRepository(String databaseFile){
         return new CourseJdbcRepository(databaseFile);
